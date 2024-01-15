@@ -1,0 +1,47 @@
+- name: Install 7zip
+  win_chocolatey:
+    name: 7zip
+    version: "23.1.0"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install firefox-nightly
+  win_chocolatey:
+    name: firefox-nightly
+    version: "123.0.1.2023122521-alpha"
+    source: "{{ chocolatey_source }}"
+    state: present
+    allow_prerelease: yes
+- name: Install googlechrome --ignore-checksums
+  win_shell: choco install googlechrome --version=120.0.6099.110 --ignore-checksums -y
+  args:
+    executable: powershell
+- name: Install discord
+  win_chocolatey:
+    name: discord
+    version: "1.0.9005"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install jellyfin-media-player
+  win_chocolatey:
+    name: jellyfin-media-player
+    version: "1.9.1"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install vlc
+  win_chocolatey:
+    name: vlc
+    version: "3.0.20"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install obs-studio
+  win_chocolatey:
+    name: obs-studio
+    version: "30.0.2"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install geforce-experience
+  win_chocolatey:
+    name: geforce-experience
+    version: "3.27.0.120"
+    source: "{{ chocolatey_source }}"
+    state: present

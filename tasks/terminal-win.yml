@@ -1,0 +1,57 @@
+- name: Install oh-my-posh
+  ansible.windows.win_shell: |
+    Set-ExecutionPolicy Bypass -Scope Process -Force;
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+  args:
+    executable: powershell
+
+- name: Ensure C:\Temp directory exists
+  ansible.windows.win_file:
+    path: C:\Temp
+    state: directory
+
+- name: Download Cascadia Mono Font
+  ansible.builtin.win_get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/CascadiaMono.zip
+    dest: C:\Temp\CascadiaMono.zip
+
+- name: Extract Cascadia Mono Font
+  community.windows.win_unzip:
+    src: C:\Temp\CascadiaMono.zip
+    dest: C:\Windows\Fonts
+    creates: C:\Windows\Fonts\CascadiaMono.ttf
+
+- name: Install NuGet Package Provider
+  ansible.windows.win_shell: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
+- name: Install PowerShellGet module
+  ansible.windows.win_shell: Install-Module -Name PowerShellGet -Force
+
+- name: Install terminal-icons.powershell
+  ansible.windows.win_shell: Install-Module -Name Terminal-Icons -Force
+
+- name: Install z for Windows module
+  ansible.windows.win_shell: Install-Module -Name z -Force
+
+- name: Install PSReadLine module
+  ansible.windows.win_shell: Install-Module PSReadLine -AllowPrerelease -Force -Confirm:$False
+
+- name: Ensure .omp directory exists in home folder
+  ansible.windows.win_file:
+    path: "{{ ansible_env.USERPROFILE }}\\.omp"
+    state: directory
+
+- name: Copy tonybaloney.omp.json to .omp directory
+  ansible.windows.win_copy:
+    src: ../files/tonybaloney.omp.json
+    dest: "{{ ansible_env.USERPROFILE }}\\.omp\\tonybaloney.omp.json"
+
+- name: Ensure PowerShell directory exists in Documents
+  ansible.windows.win_file:
+    path: "{{ ansible_env.USERPROFILE }}\\Documents\\PowerShell"
+    state: directory
+
+- name: Copy Microsoft.PowerShell_profile.ps1 to PowerShell folder
+  ansible.windows.win_copy:
+    src: ../files/Microsoft.PowerShell_profile.ps1
+    dest: "{{ ansible_env.USERPROFILE }}\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"

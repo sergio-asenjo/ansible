@@ -1,0 +1,101 @@
+---
+- name: WSL
+  hosts: localhost
+  vars_files:
+  - vars/main.yml
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      become: yes
+
+    - name: Upgrade all packages to the latest version
+      ansible.builtin.apt:
+        upgrade: dist
+      become: yes
+
+    - name: Install curl
+      ansible.builtin.apt:
+        name: curl
+        state: present
+      become: yes
+
+    - name: Install or update git
+      ansible.builtin.apt:
+        name: git
+        state: present
+      become: yes
+
+    - name: Install z from rupa/z
+      ansible.builtin.git:
+        repo: 'https://github.com/rupa/z.git'
+        dest: '~/Repositories/z'
+        version: master
+      when: ansible_facts['distribution'] == 'Ubuntu'
+
+    - name: Install exa
+      ansible.builtin.apt:
+        name: exa
+        state: present
+      become: yes
+      when: ansible_facts['distribution'] == 'Ubuntu'
+
+    - name: Download nvm install script v0.39.7
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh
+        dest: /tmp/install_nvm.sh
+        mode: '0755'
+      become: yes
+      register: download_nvm
+
+    - name: Check if nvm is installed
+      ansible.builtin.command: 'command -v nvm'
+      register: nvm_installed
+      failed_when: false
+      changed_when: false
+
+    - name: Install nvm (Node Version Manager) v0.39.7
+      ansible.builtin.shell: /tmp/install_nvm.sh
+      args:
+        executable: /bin/bash
+      when: nvm_installed.rc != 0
+      changed_when: nvm_installed.rc != 0
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
+
+    - name: Configure Git
+      ansible.builtin.import_tasks: tasks/git.yml
+
+    - name: Setup SSH
+      ansible.builtin.import_tasks: tasks/ssh.yml
+
+    - name: Install unzip
+      ansible.builtin.apt:
+        name: unzip
+        state: present
+      become: yes
+
+    - name: Install Oh My Posh
+      ansible.builtin.get_url:
+        url: https://ohmyposh.dev/install.sh
+        dest: /tmp/install_ohmyposh.sh
+        mode: '0755'
+      become: yes
+
+    - name: Run Oh My Posh install script
+      ansible.builtin.shell: /tmp/install_ohmyposh.sh
+      become: yes
+      args:
+        executable: /bin/bash
+
+    - name: Copy Oh My Posh config file
+      ansible.builtin.copy:
+        src: ../files/tonybaloney.omp.json
+        dest: "{{ ansible_env.HOME }}/tonybaloney.omp.json"
+
+    - name: Replace global .bashrc with custom .bashrc
+      ansible.builtin.copy:
+        src: files/.bashrc
+        dest: "{{ ansible_env.HOME }}/.bashrc"
+        mode: '0644'

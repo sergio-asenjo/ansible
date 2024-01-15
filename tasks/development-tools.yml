@@ -1,0 +1,66 @@
+- name: Install vscode
+  win_chocolatey:
+    name: vscode
+    version: "1.85.1"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install python310
+  win_chocolatey:
+    name: python310
+    version: "3.10.11"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install nvm
+  win_chocolatey:
+    name: nvm
+    version: "1.1.12"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install dbeaver
+  win_chocolatey:
+    name: dbeaver
+    version: "23.3.0"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install microsoft-windows-terminal
+  win_chocolatey:
+    name: microsoft-windows-terminal
+    version: "1.18.3181"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install powershell-core
+  win_chocolatey:
+    name: powershell-core
+    version: '7.4.1'
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install dotnet-6.0-sdk
+  win_chocolatey:
+    name: dotnet-6.0-sdk
+    version: "6.0.417"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install openjdk8
+  win_chocolatey:
+    name: openjdk8
+    version: "8.342.07.20220913"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install openjdk
+  win_chocolatey:
+    name: openjdk
+    version: "21.0.1"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install docker-desktop
+  win_chocolatey:
+    name: docker-desktop
+    version: "4.26.1"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install git
+  win_chocolatey:
+    name: git
+    version: "2.43.0"
+    source: "{{ chocolatey_source }}"
+    state: present

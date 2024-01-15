@@ -1,0 +1,19 @@
+- name: Ensure Downloads directory exists
+  ansible.windows.win_file:
+    path: "{{ ansible_env.USERPROFILE }}\\Downloads"
+    state: directory
+
+- name: Download WaveLink
+  ansible.windows.win_get_url:
+    url: https://edge.elgato.com/egc/windows/wavelink/1.8.2/WaveLink_1.8.2.730_x64.msi
+    dest: "{{ ansible_env.USERPROFILE }}\\Downloads\\WaveLink_1.8.2.730_x64.msi"
+
+- name: Download Discord PTB
+  ansible.windows.win_get_url:
+    url: https://discord.com/api/download/ptb?platform=win
+    dest: "{{ ansible_env.USERPROFILE }}\\Downloads\\DiscordPTBSetup.exe"
+
+- name: Download REAPER ReaPlugs
+  ansible.windows.win_get_url:
+    url: https://www.reaper.fm/reaplugs/reaplugs236_x64-install.exe
+    dest: "{{ ansible_env.USERPROFILE }}\\Downloads\\reaplugs236_x64-install.exe"

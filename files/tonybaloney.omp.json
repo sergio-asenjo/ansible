@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "#18354c",
+          "foreground": "#ffc107",
+          "leading_diamond": "\ue0b6",
+          "properties": {
+            "style": "folder"
+          },
+          "style": "diamond",
+          "template": " \ue5ff {{ .Path }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "path"
+        },
+        {
+          "background": "#18354c",
+          "foreground": "#ffc107",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "powerline",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }}{{ end }} ",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b0",
+          "type": "git"
+        },
+        {
+          "type": "node",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#ffffff",
+          "background": "#6CA35E",
+          "template": "{{ if or (glob \"*angular.json\") (glob \"*cdk.json\") }}{{ else }}  {{ .Major }}{{ end }} "
+        },        
+        {
+          "type": "angular",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "background": "#b52e31",
+          "foreground": "#ffffff",
+          "template": "  {{ .Major }} "
+        },
+        {
+          "type": "aws",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#ffffff",
+          "background": "#FFA400",
+          "template": "{{ if glob \"*cdk.json\" }}  {{.Profile}}{{if .Region}}@{{.Region}}{{end}} {{ end }}"
+        },
+        {
+          "type": "dotnet",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#000000",
+          "background": "#512bd4",
+          "template": "  {{ .Major }} "
+        },
+        {
+          "type": "python",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#100e23",
+          "background": "#3770a0",
+          "template": "  {{ .Full }} "
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 2
+}

@@ -1,0 +1,25 @@
+- name: Set Git global email for Windows
+  ansible.windows.win_shell: git config --global user.email "{{ email }}"
+  args:
+    executable: powershell
+  when: ansible_os_family == "Windows" and email is defined
+
+- name: Set Git global name for Windows
+  ansible.windows.win_shell: git config --global user.name "sergio-asenjo"
+  args:
+    executable: powershell
+  when: ansible_os_family == "Windows"
+
+- name: Set Git global email for Ubuntu
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ email }}"
+  when: ansible_os_family == "Debian" and email is defined
+
+- name: Set Git global name for Ubuntu
+  ansible.builtin.git_config:
+    name: user.name
+    scope: global
+    value: "sergio-asenjo"
+  when: ansible_os_family == "Debian"

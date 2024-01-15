@@ -1,0 +1,12 @@
+- name: Install minecraft-launcher
+  win_chocolatey:
+    name: minecraft-launcher
+    version: '1.0.0.020230616'
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install steam
+  win_chocolatey:
+    name: steam
+    version: '2.10.91.91221129'
+    source: "{{ chocolatey_source }}"
+    state: present

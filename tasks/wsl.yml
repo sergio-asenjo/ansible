@@ -1,0 +1,20 @@
+- name: Enable Windows Subsystem for Linux and Virtual Machine Platform
+  ansible.windows.win_optional_feature:
+    name:
+      - Microsoft-Windows-Subsystem-Linux
+      - VirtualMachinePlatform
+    state: present
+  register: wsl_status
+
+- name: Set WSL 2 as the default version
+  ansible.windows.win_command: wsl --set-default-version 2
+  when: wsl_status.changed
+
+- name: Restart the machine to complete the WSL install
+  ansible.windows.win_reboot:
+  when: wsl_status.reboot_required
+
+- name: Install WSL Default Distro
+  ansible.windows.win_shell: wsl --install -d Ubuntu-22.04
+  register: wsl_install
+  when: not wsl_status.reboot_required

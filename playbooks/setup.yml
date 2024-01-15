@@ -1,0 +1,39 @@
+- hosts: windows_host
+  become: true
+  become_method: runas
+  vars:
+    ansible_become_user: "change_me"
+    ansible_user: "change_me"
+    ansible_become_password: "change_me"
+    ansible_password: "change_me"
+    ansible_connection: winrm
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/debloat_vars.yml
+
+  roles:
+    - ccdc.debloat_windows
+
+  tasks:
+    - name: Install Chocolatey
+      win_shell: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force;
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+        Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+      args:
+        creates: C:\ProgramData\chocolatey\bin\choco.exe
+
+    - import_tasks: ../tasks/development-tools.yml
+    - import_tasks: ../tasks/common-apps.yml
+    - import_tasks: ../tasks/game-apps.yml
+    - import_tasks: ../tasks/work-tools.yml
+    - import_tasks: ../tasks/manual-installers.yml
+
+  post_tasks:
+    - import_tasks: ../tasks/git.yml
+    - import_tasks: ../tasks/ssh.yml
+    - import_tasks: ../tasks/wsl.yml
+    - import_tasks: ../tasks/terminal-win.yml

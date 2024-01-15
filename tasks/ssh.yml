@@ -1,0 +1,43 @@
+- name: Ensure .ssh directory exists for Windows
+  ansible.windows.win_file:
+    path: "%USERPROFILE%\\.ssh"
+    state: directory
+  when: ansible_os_family == "Windows"
+
+- name: Copy and decrypt private SSH key for Windows
+  ansible.windows.win_copy:
+    src: ../files/id_rsa
+    dest: "%USERPROFILE%\\.ssh\\id_rsa"
+    decrypt: true
+  when: ansible_os_family == "Windows"
+
+- name: Copy and decrypt public SSH key for Windows
+  ansible.windows.win_copy:
+    src: ../files/id_rsa.pub
+    dest: "%USERPROFILE%\\.ssh\\id_rsa.pub"
+    decrypt: true
+  when: ansible_os_family == "Windows"
+
+- name: Ensure .ssh directory exists for Ubuntu
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: "0700"
+  when: ansible_os_family == "Debian"
+
+- name: Copy and decrypt private SSH key for Ubuntu
+  ansible.builtin.copy:
+    src: ../files/id_rsa
+    dest: "{{ ansible_env.HOME }}/.ssh/id_rsa"
+    mode: "0600"
+    decrypt: true
+  when: ansible_os_family == "Debian"
+
+- name: Copy and decrypt public SSH key for Ubuntu
+  ansible.builtin.copy:
+    src: ../files/id_rsa.pub
+    dest: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
+    mode: "0644"
+    decrypt: true
+  when: ansible_os_family == "Debian"
+

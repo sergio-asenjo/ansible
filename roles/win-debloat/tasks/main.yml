@@ -1,0 +1,81 @@
+- name: Run ccdc.debloat_windows role
+  include_role:
+    name: ccdc.debloat_windows
+  vars:
+    disable_telemetry_policy: true
+    disable_telemetry_dnsblock: true
+    disable_windows_defender_tasks: false
+    disable_windows_defender_policy: false
+    disable_windows_defender_context_menu: false
+    disable_windows_defender_sample_submission: false
+    disable_mouse_pointer_hiding: true
+    disable_game_bar: true
+    disable_keyboard_accessibility: true
+    disable_screensaver: true
+    disable_display_timeout: true
+    disable_edge_shortcut: true
+    disable_aero_shake: false
+    enable_quickedit: true
+    show_run: true
+    show_admin_tools: true
+    set_explorer_default_this_pc: true
+    set_folder_view_options: true
+    library_folders:
+      - { B4BFCC3A-DB2C-424C-B029-7FE99A87C641 } # Desktop
+      - { A8CDFF1C-4878-43be-B5FD-F8091C1C60D0 } # Documents
+      - { d3162b92-9365-467a-956b-92703aca08af } # Documents
+      - { 374DE290-123F-4565-9164-39C4925E467B } # Downloads
+      - { 088e3905-0323-4b02-9826-5d99428e115f } # Downloads
+      - { 1CF1260C-4DD0-4ebb-811F-33C572699FDE } # Music
+      - { 3dfdf296-dbec-4fb4-81d1-6a3438bcf4de } # Music
+      - { 3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA } # Pictures
+      - { 24ad3ad4-a569-4530-98e1-ab02f9417aa8 } # Pictures
+      - { A0953C92-50DC-43bf-BE83-3742FED03C9C } # Videos
+      - { f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a } # Videos
+      - { 0DB7E03F-FC29-4DC6-9020-FF41B59E513A } # 3D Objects
+    disable_search_web_results: true
+    disable_web_language_list_access: true
+    disable_location_aware_printing: true
+    disable_keyboard_telemetry: true
+    disable_advertising_id: true
+    disable_smartscreen_web_filter: true
+    disable_microsoft_account_settings_sync: true
+    disable_cortana_personalization: true
+    disable_contact_harvesting: true
+    disable_input_personalization: true
+    harden_microsoft_edge: true
+    disable_location_sensor: true
+    disable_default_background_access: true
+    disable_unpaired_information_sharing: true
+    disable_autoupdate: false
+    disable_delivery_optimization: true
+    disable_driver_updates: false
+    disable_update_notification: true
+    disable_default_app_reinstall: true
+    disable_windows_store_autodownload: true
+    disable_app_suggestions: true
+    disable_hibernate: true
+    remove_onedrive: false
+    disable_services:
+      - "diagnosticshub.standardcollector.service"
+      - "DiagTrack"
+      - "dmwappushservice"
+      - "HomeGroupListener"
+      - "HomeGroupProvider"
+      - "lfsvc"
+      - "MapsBroker"
+      - "TrkWks"
+      - "WbioSrvc"
+      - "WMPNetworkSvc"
+      - "XblAuthManager"
+      - "XblGameSave"
+      - "XboxNetApiSvc"
+    remove_windows_optional_features:
+      - XPS-Viewer
+    remove_windows_capabilities:
+      - Media.WindowsMediaPlayer~~~~0.0.12.0
+      - MathRecognizer~~~~0.0.1.0
+      - Language.Speech~~~en-US~0.0.1.0
+      - Language.OCR~~~en-US~0.0.1.0
+      - Language.Handwriting~~~en-US~0.0.1.0
+      - Browser.InternetExplorer~~~~0.0.11.0

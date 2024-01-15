@@ -1,0 +1,24 @@
+- name: Install visualstudio2022community
+  win_chocolatey:
+    name: visualstudio2022community
+    version: "117.8.3.0"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install clickup-official
+  win_chocolatey:
+    name: clickup-official
+    version: "3.3.57"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install thunderbird
+  win_chocolatey:
+    name: thunderbird
+    version: "115.6.0"
+    source: "{{ chocolatey_source }}"
+    state: present
+- name: Install postman
+  win_chocolatey:
+    name: postman
+    version: "10.21.0"
+    source: "{{ chocolatey_source }}"
+    state: present

@@ -1,0 +1,6 @@
+collections:
+  - name: ansible.windows
+
+roles:
+  - name: ccdc.debloat_windows
+    src: https://github.com/ccdc-opensource/ansible-role-debloat-windows
